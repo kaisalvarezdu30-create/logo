@@ -1,0 +1,10 @@
+{
+  "services": {
+    "frontend": {
+      "entrypoint": "frontend"
+    },
+    "backend": {
+      "entrypoint": "backend"
+    }
+  }
+}
