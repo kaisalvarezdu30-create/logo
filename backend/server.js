@@ -5,6 +5,16 @@ import generateLogoRouter from './routes/generateLogo.js';
 
 dotenv.config();
 
+// Validate AI provider configuration at startup
+const provider = (process.env.AI_PROVIDER || 'mock').toLowerCase();
+if (provider === 'openai' && !process.env.OPENAI_API_KEY) {
+  console.warn('⚠  AI_PROVIDER=openai but OPENAI_API_KEY is missing → falling back to mock');
+} else if (provider === 'stability' && !process.env.STABILITY_API_KEY) {
+  console.warn('⚠  AI_PROVIDER=stability but STABILITY_API_KEY is missing → falling back to mock');
+} else if (!['openai', 'stability', 'mock'].includes(provider)) {
+  console.warn(`⚠  Unknown AI_PROVIDER="${provider}" → falling back to mock`);
+}
+
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
